@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool debug = false;
+bool debug = true;
 
 /*
 	策略函数接口,该函数被对抗平台调用,每次传入当前状态,要求输出你的落子点,该落子点必须是一个符合游戏规则的落子点,不然对抗平台会直接认为你的程序有误
@@ -50,7 +50,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 	/*--------------------参量--------------------------*/
 	// 偶数？
-	int depth = 8;
+	int depth = 6;
 	
 	int* modifiable_top = new int[N];
 	for (int j = 0; j < N; j++) {
@@ -83,7 +83,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
-		// cerr << j << "th column eval = " << eval << endl;
+		cerr << j << "th column eval = " << eval << endl;
 		
 		// 恢复落子和top
 		board[this_x][this_y] = 0;
@@ -94,16 +94,13 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 		// 更新最大评估值
 		maxEval = max(maxEval, eval);
-		if (debug)
-			cerr << "maxEval = " << maxEval << endl;
+		// if (debug)
+		// 	cerr << "maxEval = " << maxEval << endl;
 		if (maxEval == eval) {
 			x = this_x;
 			y = this_y;
 		}
 	}
-
-	if (debug)
-		cerr << "x=" << x << " y=" << y << endl;
 
 	// 落子点一定为 x = _top[y] - 1
 	// 当_top[y]为0时，不可以落子
@@ -339,20 +336,20 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	if (maximizing) {
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
-			printBoardAndValue(board, M, N, -1, INT_MIN);
+			// printBoardAndValue(board, M, N, -1, INT_MIN);
 			return INT_MIN;
 		}
 		else if (isTie(N, top)) {
-			printBoardAndValue(board, M, N, -1, 0);
+			// printBoardAndValue(board, M, N, -1, 0);
 			return 0;
 		}
 		else if (depth == 0) {
-			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
+			// printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
-		if (debug)
-			cerr << "machine (2) deciding (maximizing) ..." << endl;
+		// if (debug)
+		// 	cerr << "machine (2) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			// printBoard(board, M, N);
 			// printArray(top, N);
@@ -396,20 +393,20 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	else {
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
-			printBoardAndValue(board, M, N, -1, INT_MAX);
+			// printBoardAndValue(board, M, N, -1, INT_MAX);
 			return INT_MAX;
 		}
 		else if (isTie(N, top)) {
-			printBoardAndValue(board, M, N, -1, 0);
+			// printBoardAndValue(board, M, N, -1, 0);
 			return 0;
 		}
 		else if (depth == 0) {
-			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
+			// printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
-		if (debug)
-			cerr << "player (1) deciding (maximizing) ..." << endl;
+		// if (debug)
+		// 	cerr << "player (1) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			int flag;
 			// printBoard(board, M, N);
@@ -439,13 +436,13 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 更新最小评估值
 			minEval = min(minEval, eval);
-			if (debug)
-				cerr << "minEval = " << minEval << endl;
+			// if (debug)
+			// 	cerr << "minEval = " << minEval << endl;
 
 			// 执行剪枝
 			if (beta <= alpha) {
-				if (debug)
-					cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+				// if (debug)
+				// 	cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
 				break;
 			}
 
