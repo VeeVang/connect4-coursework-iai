@@ -27,7 +27,8 @@ using namespace std;
 	output:
 		你的落子点Point
 */
-extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const int* top, const int* _board, const int lastX, const int lastY, const int noX, const int noY){
+// extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const int* top, const int* _board, const int lastX, const int lastY, const int noX, const int noY){
+extern "C" Point* getPoint(const int M, const int N, const int* top, const int* _board, const int lastX, const int lastY, const int noX, const int noY){
 	/*
 		不要更改这段代码
 	*/
@@ -114,7 +115,8 @@ extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const
 	getPoint函数返回的Point指针是在本dll模块中声明的，为避免产生堆错误，应在外部调用本dll中的
 	函数来释放空间，而不应该在外部直接delete
 */
-extern "C" __declspec(dllexport) void clearPoint(Point* p){
+// extern "C" __declspec(dllexport) void clearPoint(Point* p){
+extern "C" void clearPoint(Point* p){
 	delete p;
 	return;
 }
