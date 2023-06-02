@@ -6,10 +6,10 @@
 
 using namespace std;
 
-bool debug = true;
-// bool debug = false;
+/***--------------------参量--------------------***/
+// bool debug = true;
+bool debug = false;
 int connect_3_score = 10000;
-// int connect_3_score_vertical = 3000;
 int connect_3_next_step_score = 200;
 int connect_2_score = 100;
 int piece_score = 4;
@@ -59,8 +59,6 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 	*/
 	//Add your own code below
 
-	/*--------------------参量--------------------------*/
-	// 偶数？
 
 	
 	int* modifiable_top = new int[N];
@@ -95,7 +93,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, max_depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
 		// if (debug)
-		// 	cerr << j << "th column eval = " << eval << endl;
+			cerr << j << "th column eval = " << eval << endl;
 		
 		// 恢复落子和top
 		board[this_x][this_y] = 0;
@@ -430,15 +428,15 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	if (maximizing) {
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
-			printBoardAndValue(board, M, N, -1, INT_MIN);
+			// printBoardAndValue(board, M, N, -1, INT_MIN);
 			return INT_MIN;
 		}
 		else if (isTie(N, top)) {
-			printBoardAndValue(board, M, N, -1, 0);
+			// printBoardAndValue(board, M, N, -1, 0);
 			return 0;
 		}
 		else if (depth == 0) {
-			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1,top), evaluateBoard(board, M, N, 2, 1,top));
+			// printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1,top), evaluateBoard(board, M, N, 2, 1,top));
 			return evaluateBoard(board, M, N, 2, 1, top);
 		}
 		
@@ -488,15 +486,15 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	else {
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
-			printBoardAndValue(board, M, N, -1, INT_MAX);
+			// printBoardAndValue(board, M, N, -1, INT_MAX);
 			return INT_MAX;
 		}
 		else if (isTie(N, top)) {
-			printBoardAndValue(board, M, N, -1, 0);
+			// printBoardAndValue(board, M, N, -1, 0);
 			return 0;
 		}
 		else if (depth == 0) {
-			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1, top), evaluateBoard(board, M, N, 2, 1, top));
+			// printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1, top), evaluateBoard(board, M, N, 2, 1, top));
 			return evaluateBoard(board, M, N, 2, 1, top);
 		}
 		// 遍历所有可能的动作
