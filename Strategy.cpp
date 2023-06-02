@@ -6,14 +6,14 @@
 
 using namespace std;
 
-// bool debug = true;
-bool debug = false;
+bool debug = true;
+// bool debug = false;
 int connect_3_score = 10000;
 // int connect_3_score_vertical = 3000;
 int connect_3_next_step_score = 200;
 int connect_2_score = 100;
 int piece_score = 4;
-int depth = 4;
+int max_depth = 4;
 int add_thres = 3;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
@@ -93,7 +93,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		modifiable_top[j] -= flag;
 
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
-		int eval = alphaBeta(board, depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
+		int eval = alphaBeta(board, max_depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
 		// if (debug)
 		// 	cerr << j << "th column eval = " << eval << endl;
 		
