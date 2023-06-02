@@ -92,7 +92,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		board[this_x][this_y] = 2;
 		modifiable_top[j] -= flag;
 
-		cerr << "evaluating" << j << "th column" << eval << endl;
+		cerr << "evaluating" << j << "th column" << endl;
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, max_depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
 		// if (debug)
