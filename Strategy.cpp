@@ -7,13 +7,13 @@
 using namespace std;
 
 // bool debug = true;
-bool debug = true;
+bool debug = false;
 int connect_3_score = 10000;
 // int connect_3_score_vertical = 3000;
 int connect_3_next_step_score = 200;
 int connect_2_score = 100;
 int piece_score = 10;
-int depth = 2;
+int depth = 4;
 int add_thres = 3;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
