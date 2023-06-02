@@ -186,6 +186,22 @@ void printBoardAndValue(int* const * board, int M, int N, int value_of_2, int va
 	cerr << "comprehensive value: " << value << endl;
 }
 
+void printBoard(int* const * board, int M, int N){
+	cerr << "board: " << endl;
+	for(int i=0; i<M; i++) {
+		for(int j=0; j<N; j++) //每行有m列
+			cerr<<board[i][j]<<" "; //输出第i行第j列的数
+		cerr<<endl; //每输出完一行，就输出一个换行符
+	}
+}
+
+void printArray(int* arr, int N){
+	cerr << "top: " << endl;
+	for (int j = 0; j < N; j++)
+		cerr << arr[j] << " ";
+	cerr << endl;
+}
+
 // 棋盘估值
 // 没检查
 int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponent) {
@@ -325,6 +341,8 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		// 遍历所有可能的动作
 		cerr << "machine (2) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
+			printBoard(board, M, N);
+			printArray(top, N);
 			int flag;
 			if (flag = isSpace(j, board, top, noX, noY)) {
 				this_y = j;
@@ -378,6 +396,9 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		cerr << "player (1) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			int flag;
+			printBoard(board, M, N);
+			printArray(top, N);
+			cerr << j << "th column is space: " << isSpace(j, board, top, noX, noY) << endl;
 			if (flag = isSpace(j, board, top, noX, noY)) {
 				this_y = j;
 				this_x = top[j] - flag;
