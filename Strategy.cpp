@@ -544,7 +544,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// ÷¥––ºÙ÷¶
 			if (beta <= alpha) {
 				// if (debug)
-				// 	cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+					cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
 				break;
 			}
 
