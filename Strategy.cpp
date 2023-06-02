@@ -257,7 +257,6 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 				if (Empty(board, M, N, i, j - 1, self)) {
 					value += connect_3_score;
 					value += connect_2_score * relu((add_thres - (top[j - 1] - i)));
-					}
 				}
 				if (Empty(board, M, N, i, j + 3, self)){
 					value += connect_3_score;
@@ -299,7 +298,6 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 				if (Empty(board, M, N, i + 3, j, self)){
 					value += connect_3_score;
 					value += connect_2_score * relu((add_thres - (top[j] - (i + 3))));
-					
 				}
 			}
 		}
@@ -372,7 +370,7 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int j = 2; j < N; j++) {
 			if (board[i][j] == self && board[i + 1][j - 1] == self && board[i + 2][j - 2] == self) {
 				if (Empty(board, M, N, i - 1, j + 1, self)) {
-					value += connect_3_score;{
+					value += connect_3_score;
 					value += connect_2_score * relu((add_thres - (top[j + 1] - (i - 1))));
 				}
 				if (Empty(board, M, N, i + 3, j - 3, self)) {
