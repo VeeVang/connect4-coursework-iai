@@ -454,7 +454,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			return 0;
 		}
 		else if (depth == 0) {
-			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
+			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1,top), evaluateBoard(board, M, N, 2, 1,top));
 			return evaluateBoard(board, M, N, 2, 1, top);
 		}
 		
@@ -512,7 +512,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			return 0;
 		}
 		else if (depth == 0) {
-			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
+			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1, top), evaluateBoard(board, M, N, 2, 1, top));
 			return evaluateBoard(board, M, N, 2, 1, top);
 		}
 		// 遍历所有可能的动作
