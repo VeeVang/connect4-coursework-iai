@@ -21,9 +21,9 @@ bool EmptyOrSelf(int *const *board, int M, int N, int i, int j, int self);
 
 bool Empty(int *const *board, int M, int N, int i, int j, int self);
 
-int evaluateBoard(int *const *board, int M, int N, int self, int opponent);
+int evaluateBoard(int *const *board, int M, int N, int self, int opponent, const int *top);
 
-int evaluateBoardFromSelf(int *const *board, int M, int N, int self, int opponent);
+int evaluateBoardFromSelf(int *const *board, int M, int N, int self, int opponent, const int *top);
 
 int isSpace(int j, int *const *board, const int *top, int noX, int noY);
 
