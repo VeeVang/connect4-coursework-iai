@@ -65,7 +65,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 	// 遍历所有可能的动作
 	for (int j = 0; j < N; j++) {
 		int flag;
-		cerr << "isSpace of column j: " <<  isSpace(j, board, top, noX, noY) << endl;
+		// cerr << "isSpace of column j: " <<  isSpace(j, board, top, noX, noY) << endl;
 		if (flag = isSpace(j, board, top, noX, noY)) {
 			this_y = j;
 			this_x = top[j] - flag;
@@ -80,7 +80,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
-		cerr << j << "th column eval = " << eval << endl;
+		// cerr << j << "th column eval = " << eval << endl;
 		
 		// 恢复落子和top
 		board[this_x][this_y] = 0;
@@ -171,6 +171,17 @@ bool Empty(int* const* board, int M, int N, int i, int j, int self) {
 
 // 棋盘价值=己方目前的价值-对方目前棋局的价值。
 int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
+	if (evaluateBoardFromSelf(board, M, N, self, opponent) > evaluateBoardFromSelf(board, M, N, opponent, self)){
+		cerr << "evaluating board value!..." << endl;
+		cerr << "board: " << endl;
+		for(int i=0; i<M; i++) {
+			for(int j=0; j<N; j++) //每行有m列
+				cerr<<board[i][j]<<" "; //输出第i行第j列的数
+			cerr<<endl; //每输出完一行，就输出一个换行符
+		}
+		cerr << "value of player 2 only: " << evaluateBoardFromSelf(board, M, N, self, opponent) << endl;
+		cerr << "comprehensive value: " << evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self) << endl;
+	}
 	return evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self);
 }
 
@@ -257,14 +268,6 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 			}
 		}
 	}
-	cerr << "evaluating board value!..." << endl;
-	cerr << "board: " << endl;
-	for(int i=0; i<M; i++) {
-		for(int j=0; j<N; j++) //每行有m列
-			cerr<<board[i][j]<<" "; //输出第i行第j列的数
-		cerr<<endl; //每输出完一行，就输出一个换行符
-	}
-	cerr << "value: " << value << endl;
 	return value;
 };
 
