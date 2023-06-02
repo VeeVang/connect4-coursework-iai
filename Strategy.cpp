@@ -11,7 +11,7 @@ int connect_3_score = 10000;
 // int connect_3_score_vertical = 3000;
 int connect_2_score = 100;
 int connect_3_score_increment = connect_3_score;
-int piece_score = 1;
+int piece_score = 5;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
 
