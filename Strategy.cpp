@@ -423,12 +423,13 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 执行剪枝
 			if (beta <= alpha) {
-				cerr << "beta = " <<beta << "alpha = " << alpha <<"Prune!" << endl;
+				cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
 				break;
 			}
 
 			// 更新最小评估值
 			minEval = min(minEval, eval);
+			cerr << "minEval = " << minEval << endl;
 		}
 
 		return minEval;
