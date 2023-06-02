@@ -108,13 +108,14 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		alpha = max(alpha, eval);
 
 		// 更新最大评估值
-		maxEval = max(maxEval, eval);
+		
 		// if (debug)
 		// 	cerr << "maxEval = " << maxEval << endl;
-		if (maxEval == eval) {
+		if (maxEval < eval) {
 			x = this_x;
 			y = this_y;
 		}
+		maxEval = max(maxEval, eval);
 	}
 
 	// 落子点一定为 x = _top[y] - 1
