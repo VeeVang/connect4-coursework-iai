@@ -309,7 +309,6 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	// machine decide
 	// 2
 	if (maximizing) {
-		cerr << "machine (2) deciding (maximizing) ..." << endl;
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
 			printBoardAndValue(board, M, N, -1, INT_MIN);
@@ -324,6 +323,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
+		cerr << "machine (2) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			int flag;
 			if (flag = isSpace(j, board, top, noX, noY)) {
@@ -361,7 +361,6 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	// 如果是最小化的回合
 	// 即玩家的回合
 	else {
-		cerr << "player (1) deciding (maximizing) ..." << endl;
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
 			printBoardAndValue(board, M, N, -1, INT_MAX);
@@ -376,6 +375,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
+		cerr << "player (1) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			int flag;
 			if (flag = isSpace(j, board, top, noX, noY)) {
