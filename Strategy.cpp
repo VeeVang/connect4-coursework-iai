@@ -49,7 +49,8 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 	//Add your own code below
 
 	/*--------------------²ÎÁ¿--------------------------*/
-	int depth = 7;
+	// Å¼Êý£¿
+	int depth = 8;
 	
 	int* modifiable_top = new int[N];
 	for (int j = 0; j < N; j++) {
