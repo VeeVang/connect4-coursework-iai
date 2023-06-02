@@ -7,9 +7,9 @@
 using namespace std;
 
 bool debug = false;
-int connect_3_score = 1000;
-int connect_3_score_vertical = 3000;
-int connect_2_score = 10;
+int connect_3_score = 10000;
+// int connect_3_score_vertical = 3000;
+int connect_2_score = 100;
 int connect_3_score_increment = connect_3_score;
 int piece_score = 1;
 
@@ -182,8 +182,8 @@ bool Empty(int* const* board, int M, int N, int i, int j, int self) {
 }
 
 // 棋盘价值=己方目前的价值-对方目前棋局的价值。
-int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
-	return evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self);
+int evaluateBoard(int* const * board, int M, int N, int self, int opponent, const int* top) {
+	return evaluateBoardFromSelf(board, M, N, self, opponent, top) - evaluateBoardFromSelf(board, M, N, opponent, self, top);
 }
 
 void printBoardAndValue(int* const * board, int M, int N, int value_of_2, int value){
@@ -221,8 +221,8 @@ void printArray(int* arr, int N){
 }
 
 // 棋盘估值
-// 没检查
-int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponent) {
+// 再补一个abs(top[j - 1] - (i - 1)) * connect_2_score 或者top[j + 3]下一个子就能落，那么就给更高的分数。
+int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponent, const int* top) {
 	int value = 0;
 	// 横向扫描
 	for (int i = 0; i < M; i++) {
@@ -252,10 +252,16 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 			// 如果三连且至少有一端可以再落子
 			if (board[i][j] == self && board[i][j + 1] == self && board[i][j + 2] == self) {
 				if (EmptyOrSelf(board, M, N, i, j - 1, self)) {
-					value += connect_3_score_increment;
+					value += connect_3_score;
+					if (Empty(board, M, N, i, j - 1, self)) {
+						value += connect_2_score * (N - (top[j - 1] - i));
+					}
 				}
 				if (EmptyOrSelf(board, M, N, i, j + 3, self)){
-					value += connect_3_score_increment;
+					value += connect_3_score;
+					if (Empty(board, M, N, i, j + 3, self)) {
+						value += connect_2_score * (N - (top[j + 3] - i));
+					}
 				}
 			}
 		}
@@ -287,10 +293,16 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int i = 0; i < M - 2; i++) {
 			if (board[i][j] == self && board[i + 1][j] == self && board[i + 2][j] == self) {
 				if (EmptyOrSelf(board, M, N, i - 1, j, self)) {
-					value += connect_3_score_vertical;
+					value += connect_3_score;
+					if (Empty(board, M, N, i - 1, j, self)) {
+						value += connect_2_score * (N - (top[j] - (i - 1)));
+					}
 				}
 				if (EmptyOrSelf(board, M, N, i + 3, j, self)){
-					value += connect_3_score_vertical;
+					value += connect_3_score;
+					if (Empty(board, M, N, i + 3, j, self)) {
+						value += connect_2_score * (N - (top[j] - (i + 3)));
+					}
 				}
 			}
 		}
@@ -300,10 +312,16 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int j = 0; j < N - 2; j++) {
 			if (board[i][j] == self && board[i + 1][j + 1] == self && board[i + 2][j + 2] == self) {
 				if (EmptyOrSelf(board, M, N, i - 1, j - 1, self)) {
-					value += connect_3_score_increment;
+					value += connect_3_score;
+					if (Empty(board, M, N, i - 1, j - 1, self)) {
+						value += connect_2_score * (N - (top[j - 1] - (i - 1)));
+					}
 				}
 				if (EmptyOrSelf(board, M, N, i + 3, j + 3, self)){
-					value += connect_3_score_increment;
+					value += connect_3_score;
+					if (Empty(board, M, N, i + 3, j + 3, self)) {
+						value += connect_2_score * (N - (top[j + 3] - (i + 3)));
+					}
 				}
 			}
 		}
@@ -361,10 +379,16 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int j = 2; j < N; j++) {
 			if (board[i][j] == self && board[i + 1][j - 1] == self && board[i + 2][j - 2] == self) {
 				if (EmptyOrSelf(board, M, N, i - 1, j + 1, self)) {
-					value += connect_3_score_increment;
+					value += connect_3_score;
+					if (Empty(board, M, N, i - 1, j + 1, self)) {
+						value += connect_2_score * (N - (top[j + 1] - (i - 1)));
+					}
 				}
 				if (EmptyOrSelf(board, M, N, i + 3, j - 3, self)) {
-					value += connect_3_score_increment;
+					value += connect_3_score;
+					if (Empty(board, M, N, i + 3, j - 3, self)) {
+						value += connect_2_score * (N - (top[j - 3] - (i + 3)));
+					}
 				}
 			}
 		}
@@ -421,7 +445,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		}
 		else if (depth == 0) {
 			// printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
-			return evaluateBoard(board, M, N, 2, 1);
+			return evaluateBoard(board, M, N, 2, 1, top);
 		}
 		// 遍历所有可能的动作
 		// if (debug)
@@ -478,7 +502,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		}
 		else if (depth == 0) {
 			// printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
-			return evaluateBoard(board, M, N, 2, 1);
+			return evaluateBoard(board, M, N, 2, 1, top);
 		}
 		// 遍历所有可能的动作
 		// if (debug)
