@@ -12,7 +12,7 @@ int connect_3_score = 10000;
 int connect_3_next_step_score = 1000;
 int connect_2_score = 100;
 int connect_3_score_increment = connect_3_score;
-int piece_score = 5;
+int piece_score = 1000000;
 int depth = 6;
 int add_thres = 3;
 
