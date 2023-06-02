@@ -302,13 +302,6 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	int last_x, int last_y, int* top, int noX, int noY) {
 	// int * const* const_board = board;
 	// const int * const_top = top;
-	// 判断是否达到搜索深度限制或游戏结束
-	// 并在此处添加适当的终止条件，例如检查游戏是否结束或达到最大搜索深度
-
-	// 如果达到搜索深度限制，则返回当前局面的评估分数
-	if (depth == 0) {
-		return evaluateBoard(board, M, N, 2, 1);
-	}
 	 
 	int this_x;
 	int this_y;
@@ -322,6 +315,9 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		}
 		else if (isTie(N, top)) {
 			return 0;
+		}
+		else if (depth == 0) {
+			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
 		for (int j = 0; j < N; j++) {
@@ -367,6 +363,9 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		}
 		else if (isTie(N, top)) {
 			return 0;
+		}
+		else if (depth == 0) {
+			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
 		for (int j = 0; j < N; j++) {
