@@ -423,6 +423,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// ÷¥––ºÙ÷¶
 			if (beta <= alpha) {
+				cerr << "Prune!" << endl;
 				break;
 			}
 
