@@ -437,7 +437,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// printBoard(board, M, N);
 			// cerr << "user (opoonent) will win!" << endl;
 
-			return INT_MIN;
+			return INT_MIN + max_depth - depth;
 		}
 		else if (isTie(N, top)) {
 			// printBoardAndValue(board, M, N, -1, 0);
@@ -495,7 +495,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
 			// printBoardAndValue(board, M, N, -1, INT_MAX);
-			return INT_MAX;
+			return INT_MAX - max_depth + depth;
 		}
 		else if (isTie(N, top)) {
 			// printBoardAndValue(board, M, N, -1, 0);
