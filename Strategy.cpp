@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 #include "Point.h"
 #include "Strategy.h"
 #include "Judge.h"
@@ -133,7 +134,7 @@ void clearArray(int M, int N, int** board){
 	添加你自己的辅助函数，你可以声明自己的类、函数，添加新的.h .cpp文件来辅助实现你的想法
 */
 
-bool EmptyOrSelf(const int** board, int M, int N, int i, int j, int self) {
+bool EmptyOrSelf(int* const* board, int M, int N, int i, int j, int self) {
 	// out
 	if (i < 0 || i >= M || j < 0 || j >= N ) {
 		return false;
@@ -147,7 +148,7 @@ bool EmptyOrSelf(const int** board, int M, int N, int i, int j, int self) {
 	}
 }
 
-bool Empty(const int** board, int M, int N, int i, int j, int self) {
+bool Empty(int* const* board, int M, int N, int i, int j, int self) {
 	// out
 	if (i < 0 || i >= M || j < 0 || j >= N) {
 		return false;
@@ -159,14 +160,14 @@ return true;
 }
 
 // 棋盘价值=己方目前的价值-对方目前棋局的价值。
-int evaluateBoard(const int** board, int M, int N, int self, int opponent) {
+int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
 	return evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self);
 }
 
 
 // 棋盘估值
 // 没检查
-int evaluateBoardFromSelf(const int** board, int M, int N, int self, int opponent) {
+int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponent) {
 	int value = 0;
 	int connect_3_score = 8;
 	int connect_2_score = 2;
@@ -249,7 +250,7 @@ int evaluateBoardFromSelf(const int** board, int M, int N, int self, int opponen
 	return value;
 };
 
-int isSpace(int j, const int** board, const int* top, int noX, int noY) {
+int isSpace(int j, int* const* board, const int* top, int noX, int noY) {
 	// 当top表明占满了时
 	if (top[j] != 0) {
 		return 0;
@@ -277,6 +278,8 @@ int isSpace(int j, const int** board, const int* top, int noX, int noY) {
 int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing, 
 	int M, int N, 
 	int last_x, int last_y, int* top, int noX, int noY) {
+	// int * const* const_board = board;
+	// const int * const_top = top;
 	// 判断是否达到搜索深度限制或游戏结束
 	// 并在此处添加适当的终止条件，例如检查游戏是否结束或达到最大搜索深度
 
