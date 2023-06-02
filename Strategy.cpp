@@ -94,7 +94,8 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 			y = this_y;
 		}
 	}
-	cout << "x=" << x << "y=" << y;
+
+	cerr << "x=" << x << "y=" << y;
 
 	// 落子点一定为 x = _top[y] - 1
 	// 当_top[y]为0时，不可以落子
