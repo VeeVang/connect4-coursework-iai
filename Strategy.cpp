@@ -111,6 +111,8 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		
 		// if (debug)
 		// 	cerr << "maxEval = " << maxEval << endl;
+
+		// 一定要lazy更新，为了防止因为prune而返回的值覆盖真正计算出来的值
 		if (maxEval < eval) {
 			x = this_x;
 			y = this_y;
@@ -483,6 +485,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 执行剪枝
 			if (beta <= alpha) {
+				maxEval = INT_MAX;
 				break;
 			}
 
@@ -545,10 +548,10 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// 执行剪枝
 			if (beta <= alpha) {
 				// if (debug)
-					cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+				// cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+				minEval = INT_MIN;
 				break;
 			}
-
 
 		}
 
