@@ -433,8 +433,10 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
 			// printBoardAndValue(board, M, N, -1, INT_MIN);
-			printBoard(board, M, N);
-			cerr << "user (opoonent) will win!" << endl;
+
+			// printBoard(board, M, N);
+			// cerr << "user (opoonent) will win!" << endl;
+
 			return INT_MIN;
 		}
 		else if (isTie(N, top)) {
@@ -478,9 +480,9 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			maxEval = max(maxEval, eval);
 
 			// Ö´ÐÐ¼ôÖ¦
-			if (beta <= alpha) {
-				break;
-			}
+			// if (beta <= alpha) {
+			// 	break;
+			// }
 
 
 		}
@@ -539,11 +541,11 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// 	cerr << "minEval = " << minEval << endl;
 
 			// Ö´ÐÐ¼ôÖ¦
-			if (beta <= alpha) {
-				// if (debug)
-				// 	cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
-				break;
-			}
+			// if (beta <= alpha) {
+			// 	// if (debug)
+			// 	// 	cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+			// 	break;
+			// }
 
 
 		}
