@@ -27,7 +27,7 @@ using namespace std;
 	output:
 		你的落子点Point
 */
-extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const int* top, const int* _board,  const int lastX, const int lastY, const int noX, const int noY){
+extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const int* top, const int* _board, const int lastX, const int lastY, const int noX, const int noY){
 	/*
 		不要更改这段代码
 	*/
@@ -99,6 +99,7 @@ extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const
 
 
 	delete[] modifiable_top;
+
 	// --- User code ends ---
 
 	/*
