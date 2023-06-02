@@ -12,7 +12,7 @@ int connect_3_score = 10000;
 // int connect_3_score_vertical = 3000;
 int connect_3_next_step_score = 200;
 int connect_2_score = 100;
-int piece_score = 10;
+int piece_score = 4;
 int depth = 4;
 int add_thres = 3;
 
@@ -232,10 +232,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int j = 0; j < N; j++) {
 			// 每一个棋子
 			if (board[i][j] == self) {
-				if (EmptyOrSelf(board, M, N, i, j - 1, self)) {
+				if (Empty(board, M, N, i, j - 1, self)) {
 					value += piece_score;
 				}
-				if (EmptyOrSelf(board, M, N, i, j + 1, self)) {
+				if (Empty(board, M, N, i, j + 1, self)) {
 					value += piece_score;
 				}
 			}
@@ -243,10 +243,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int j = 0; j < N - 1; j++) {
 			// 如果二连且至少有一端可以再落子或为自己的子
 			if (board[i][j] == self && board[i][j + 1] == self) {
-				if (EmptyOrSelf(board, M, N, i, j - 1, self)) {
+				if (Empty(board, M, N, i, j - 1, self)) {
 					value += connect_2_score;
 				}
-				if (EmptyOrSelf(board, M, N, i, j + 2, self)) {
+				if (Empty(board, M, N, i, j + 2, self)) {
 					value += connect_2_score;
 				}
 			}
@@ -254,17 +254,14 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int j = 0; j < N - 2; j++) {
 			// 如果三连且至少有一端可以再落子
 			if (board[i][j] == self && board[i][j + 1] == self && board[i][j + 2] == self) {
-				if (EmptyOrSelf(board, M, N, i, j - 1, self)) {
+				if (Empty(board, M, N, i, j - 1, self)) {
 					value += connect_3_score;
-					if (Empty(board, M, N, i, j - 1, self)) {
-						value += connect_2_score * relu((add_thres - (top[j - 1] - i)));
+					value += connect_2_score * relu((add_thres - (top[j - 1] - i)));
 					}
 				}
-				if (EmptyOrSelf(board, M, N, i, j + 3, self)){
+				if (Empty(board, M, N, i, j + 3, self)){
 					value += connect_3_score;
-					if (Empty(board, M, N, i, j + 3, self)) {
-						value += connect_2_score * relu((add_thres - (top[j + 3] - i)));
-					}
+					value += connect_2_score * relu((add_thres - (top[j + 3] - i)));
 				}
 			}
 		}
@@ -274,10 +271,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int i = 0; i < M; i++) {
 			// 如果二连且至少有一端可以再落子或为自己的子
 			if (board[i][j] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j, self)) {
+				if (Empty(board, M, N, i - 1, j, self)) {
 					value += piece_score;
 				}
-				if (EmptyOrSelf(board, M, N, i + 1, j, self)){
+				if (Empty(board, M, N, i + 1, j, self)){
 					value += piece_score;
 				}
 			}
@@ -285,27 +282,24 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 		for (int i = 0; i < M - 1; i++) {
 			// 如果二连且至少有一端可以再落子或为自己的子
 			if (board[i][j] == self && board[i + 1][j] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j, self)) {
+				if (Empty(board, M, N, i - 1, j, self)) {
 					value += connect_2_score;
 				}
-				if (EmptyOrSelf(board, M, N, i + 2, j, self)){
+				if (Empty(board, M, N, i + 2, j, self)){
 					value += connect_2_score;
 				}
 			}
 		}
 		for (int i = 0; i < M - 2; i++) {
 			if (board[i][j] == self && board[i + 1][j] == self && board[i + 2][j] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j, self)) {
+				if (Empty(board, M, N, i - 1, j, self)) {
 					value += connect_3_score;
-					if (Empty(board, M, N, i - 1, j, self)) {
-						value += connect_2_score * relu((add_thres - (top[j] - (i - 1))));
-					}
+					value += connect_2_score * relu((add_thres - (top[j] - (i - 1))));
 				}
-				if (EmptyOrSelf(board, M, N, i + 3, j, self)){
+				if (Empty(board, M, N, i + 3, j, self)){
 					value += connect_3_score;
-					if (Empty(board, M, N, i + 3, j, self)) {
-						value += connect_2_score * relu((add_thres - (top[j] - (i + 3))));
-					}
+					value += connect_2_score * relu((add_thres - (top[j] - (i + 3))));
+					
 				}
 			}
 		}
@@ -314,17 +308,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	for (int i = 0; i < M - 2; i++) {
 		for (int j = 0; j < N - 2; j++) {
 			if (board[i][j] == self && board[i + 1][j + 1] == self && board[i + 2][j + 2] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j - 1, self)) {
+				if (Empty(board, M, N, i - 1, j - 1, self)) {
 					value += connect_3_score;
-					if (Empty(board, M, N, i - 1, j - 1, self)) {
-						value += connect_2_score * relu((add_thres - (top[j - 1] - (i - 1))));
-					}
+					value += connect_2_score * relu((add_thres - (top[j - 1] - (i - 1))));
 				}
-				if (EmptyOrSelf(board, M, N, i + 3, j + 3, self)){
+				if (Empty(board, M, N, i + 3, j + 3, self)){
 					value += connect_3_score;
-					if (Empty(board, M, N, i + 3, j + 3, self)) {
-						value += connect_2_score * relu((add_thres - (top[j + 3] - (i + 3))));
-					}
+					value += connect_2_score * relu((add_thres - (top[j + 3] - (i + 3))));
 				}
 			}
 		}
@@ -332,10 +322,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	for (int i = 0; i < M - 1; i++) {
 		for (int j = 0; j < N - 1; j++) {
 			if (board[i][j] == self && board[i + 1][j + 1] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j - 1, self)) {
+				if (Empty(board, M, N, i - 1, j - 1, self)) {
 					value += connect_2_score;
 				}
-				if (EmptyOrSelf(board, M, N, i + 2, j + 2, self)){
+				if (Empty(board, M, N, i + 2, j + 2, self)){
 					value += connect_2_score;
 				}
 			}
@@ -344,10 +334,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < N; j++) {
 			if (board[i][j] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j - 1, self)) {
+				if (Empty(board, M, N, i - 1, j - 1, self)) {
 					value += piece_score;
 				}
-				if (EmptyOrSelf(board, M, N, i + 1, j + 1, self)){
+				if (Empty(board, M, N, i + 1, j + 1, self)){
 					value += piece_score;
 				}
 			}
@@ -357,10 +347,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < N; j++) {
 			if (board[i][j] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j + 1, self)) {
+				if (Empty(board, M, N, i - 1, j + 1, self)) {
 					value += piece_score;
 				}
-				if (EmptyOrSelf(board, M, N, i + 1, j - 1, self)){
+				if (Empty(board, M, N, i + 1, j - 1, self)){
 					value += piece_score;
 				}
 			}
@@ -369,10 +359,10 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	for (int i = 0; i < M - 1; i++) {
 		for (int j = 1; j < N; j++) {
 			if (board[i][j] == self && board[i + 1][j - 1] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j + 1, self)) {
+				if (Empty(board, M, N, i - 1, j + 1, self)) {
 					value += connect_2_score;
 				}
-				if (EmptyOrSelf(board, M, N, i + 2, j - 2, self)){
+				if (Empty(board, M, N, i + 2, j - 2, self)){
 					value += connect_2_score;
 				}
 			}
@@ -381,17 +371,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	for (int i = 0; i < M - 2; i++) {
 		for (int j = 2; j < N; j++) {
 			if (board[i][j] == self && board[i + 1][j - 1] == self && board[i + 2][j - 2] == self) {
-				if (EmptyOrSelf(board, M, N, i - 1, j + 1, self)) {
-					value += connect_3_score;
-					if (Empty(board, M, N, i - 1, j + 1, self)) {
-						value += connect_2_score * relu((add_thres - (top[j + 1] - (i - 1))));
-					}
+				if (Empty(board, M, N, i - 1, j + 1, self)) {
+					value += connect_3_score;{
+					value += connect_2_score * relu((add_thres - (top[j + 1] - (i - 1))));
 				}
-				if (EmptyOrSelf(board, M, N, i + 3, j - 3, self)) {
+				if (Empty(board, M, N, i + 3, j - 3, self)) {
 					value += connect_3_score;
-					if (Empty(board, M, N, i + 3, j - 3, self)) {
-						value += connect_2_score * relu((add_thres - (top[j - 3] - (i + 3))));
-					}
+					value += connect_2_score * relu((add_thres - (top[j - 3] - (i + 3))));
 				}
 			}
 		}
