@@ -17,6 +17,8 @@ extern "C" void clearPoint(Point *p);
 
 void clearArray(int M, int N, int **board);
 
+int evaluateBoardFromSelf(int *const *board, int M, int N, int self, int opponent);
+
 /*
 	添加你自己的辅助函数
 */
