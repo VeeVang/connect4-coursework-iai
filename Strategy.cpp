@@ -172,6 +172,11 @@ bool Empty(int* const* board, int M, int N, int i, int j, int self) {
 // 棋盘价值=己方目前的价值-对方目前棋局的价值。
 int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
 	if (evaluateBoardFromSelf(board, M, N, self, opponent) > evaluateBoardFromSelf(board, M, N, opponent, self)){
+
+	return evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self);
+}
+
+void printBoardAndValue(int* const * board, int M, int N, int value_of_2, int value){
 		cerr << "evaluating board value!..." << endl;
 		cerr << "board: " << endl;
 		for(int i=0; i<M; i++) {
@@ -179,12 +184,10 @@ int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
 				cerr<<board[i][j]<<" "; //输出第i行第j列的数
 			cerr<<endl; //每输出完一行，就输出一个换行符
 		}
-		cerr << "value of player 2 only: " << evaluateBoardFromSelf(board, M, N, self, opponent) << endl;
-		cerr << "comprehensive value: " << evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self) << endl;
+		cerr << "value of player 2 only: " << value_of_2 << endl;
+		cerr << "comprehensive value: " << value << endl;
 	}
-	return evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self);
 }
-
 
 // 棋盘估值
 // 没检查
@@ -311,12 +314,15 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	if (maximizing) {
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
+			printBoardAndValue(board, M, N, -1, INT_MIN);
 			return INT_MIN;
 		}
 		else if (isTie(N, top)) {
+			printBoardAndValue(board, M, N, -1, 0);
 			return 0;
 		}
 		else if (depth == 0) {
+			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
@@ -359,12 +365,15 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	else {
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
+			printBoardAndValue(board, M, N, -1, INT_MAX);
 			return INT_MAX;
 		}
 		else if (isTie(N, top)) {
+			printBoardAndValue(board, M, N, -1, 0);
 			return 0;
 		}
 		else if (depth == 0) {
+			printBoardAndValue(board, M, N, evaluateBoardFromSelf(board, M, N, 2, 1), evaluateBoard(board, M, N, 2, 1));
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
