@@ -13,7 +13,7 @@ int connect_3_next_step_score = 1000;
 int connect_2_score = 100;
 int connect_3_score_increment = connect_3_score;
 int piece_score = 1000000;
-int depth = 6;
+int depth = 1;
 int add_thres = 3;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
