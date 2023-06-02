@@ -9,9 +9,12 @@ using namespace std;
 bool debug = false;
 int connect_3_score = 10000;
 // int connect_3_score_vertical = 3000;
+int connect_3_next_step_score = 1000;
 int connect_2_score = 100;
 int connect_3_score_increment = connect_3_score;
 int piece_score = 5;
+int depth = 7;
+int add_thres = 3;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
 
@@ -58,7 +61,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 	/*--------------------参量--------------------------*/
 	// 偶数？
-	int depth = 6;
+
 	
 	int* modifiable_top = new int[N];
 	for (int j = 0; j < N; j++) {
@@ -254,13 +257,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 				if (EmptyOrSelf(board, M, N, i, j - 1, self)) {
 					value += connect_3_score;
 					if (Empty(board, M, N, i, j - 1, self)) {
-						value += connect_2_score * (N - (top[j - 1] - i));
+						value += connect_2_score * relu((add_thres - (top[j - 1] - i)));
 					}
 				}
 				if (EmptyOrSelf(board, M, N, i, j + 3, self)){
 					value += connect_3_score;
 					if (Empty(board, M, N, i, j + 3, self)) {
-						value += connect_2_score * (N - (top[j + 3] - i));
+						value += connect_2_score * relu((add_thres - (top[j + 3] - i)));
 					}
 				}
 			}
@@ -295,13 +298,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 				if (EmptyOrSelf(board, M, N, i - 1, j, self)) {
 					value += connect_3_score;
 					if (Empty(board, M, N, i - 1, j, self)) {
-						value += connect_2_score * (N - (top[j] - (i - 1)));
+						value += connect_2_score * relu((add_thres - (top[j] - (i - 1))));
 					}
 				}
 				if (EmptyOrSelf(board, M, N, i + 3, j, self)){
 					value += connect_3_score;
 					if (Empty(board, M, N, i + 3, j, self)) {
-						value += connect_2_score * (N - (top[j] - (i + 3)));
+						value += connect_2_score * relu((add_thres - (top[j] - (i + 3))));
 					}
 				}
 			}
@@ -314,13 +317,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 				if (EmptyOrSelf(board, M, N, i - 1, j - 1, self)) {
 					value += connect_3_score;
 					if (Empty(board, M, N, i - 1, j - 1, self)) {
-						value += connect_2_score * (N - (top[j - 1] - (i - 1)));
+						value += connect_2_score * relu((add_thres - (top[j - 1] - (i - 1))));
 					}
 				}
 				if (EmptyOrSelf(board, M, N, i + 3, j + 3, self)){
 					value += connect_3_score;
 					if (Empty(board, M, N, i + 3, j + 3, self)) {
-						value += connect_2_score * (N - (top[j + 3] - (i + 3)));
+						value += connect_2_score * relu((add_thres - (top[j + 3] - (i + 3))));
 					}
 				}
 			}
@@ -381,13 +384,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 				if (EmptyOrSelf(board, M, N, i - 1, j + 1, self)) {
 					value += connect_3_score;
 					if (Empty(board, M, N, i - 1, j + 1, self)) {
-						value += connect_2_score * (N - (top[j + 1] - (i - 1)));
+						value += connect_2_score * relu((add_thres - (top[j + 1] - (i - 1))));
 					}
 				}
 				if (EmptyOrSelf(board, M, N, i + 3, j - 3, self)) {
 					value += connect_3_score;
 					if (Empty(board, M, N, i + 3, j - 3, self)) {
-						value += connect_2_score * (N - (top[j - 3] - (i + 3)));
+						value += connect_2_score * relu((add_thres - (top[j - 3] - (i + 3))));
 					}
 				}
 			}
@@ -395,6 +398,13 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 	}
 	return value;
 };
+
+int relu(int x){
+	if (x < 0)
+		return 0;
+	else
+		return x;
+}
 
 int isSpace(int j, int* const* board, const int* top, int noX, int noY) {
 	// 当top表明占满了时
