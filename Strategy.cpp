@@ -91,6 +91,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 		// 更新最大评估值
 		maxEval = max(maxEval, eval);
+		cerr << "maxEval = " << maxEval << endl;
 		if (maxEval == eval) {
 			x = this_x;
 			y = this_y;
