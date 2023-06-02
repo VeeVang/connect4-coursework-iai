@@ -60,7 +60,8 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 	*/
 	//Add your own code below
 
-	round++;
+	round++;		
+	cerr << "round: " << round << endl;
 	
 	int* modifiable_top = new int[N];
 	for (int j = 0; j < N; j++) {
@@ -91,10 +92,11 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		board[this_x][this_y] = 2;
 		modifiable_top[j] -= flag;
 
+		cerr << "evaluating" << j << "th column" << eval << endl;
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, max_depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
 		// if (debug)
-		cerr << "round: " << round << endl;
+
 		cerr << j << "th column eval = " << eval << endl;
 		
 		// 恢复落子和top
@@ -431,6 +433,8 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
 			// printBoardAndValue(board, M, N, -1, INT_MIN);
+			printBoard(board, M, N);
+			cerr << "user (opoonent) will win!" << endl;
 			return INT_MIN;
 		}
 		else if (isTie(N, top)) {
