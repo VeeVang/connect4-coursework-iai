@@ -341,8 +341,8 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		// 遍历所有可能的动作
 		cerr << "machine (2) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
-			printBoard(board, M, N);
-			printArray(top, N);
+			// printBoard(board, M, N);
+			// printArray(top, N);
 			int flag;
 			if (flag = isSpace(j, board, top, noX, noY)) {
 				this_y = j;
@@ -396,9 +396,9 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		cerr << "player (1) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			int flag;
-			printBoard(board, M, N);
-			printArray(top, N);
-			cerr << j << "th column is space: " << isSpace(j, board, top, noX, noY) << endl;
+			// printBoard(board, M, N);
+			// printArray(top, N);
+			// cerr << j << "th column is space: " << isSpace(j, board, top, noX, noY) << endl;
 			if (flag = isSpace(j, board, top, noX, noY)) {
 				this_y = j;
 				this_x = top[j] - flag;
@@ -423,7 +423,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 执行剪枝
 			if (beta <= alpha) {
-				cerr << "Prune!" << endl;
+				cerr << "beta = " <<beta << "alpha = " << alpha <<"Prune!" << endl;
 				break;
 			}
 
