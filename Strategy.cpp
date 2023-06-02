@@ -65,6 +65,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 	// 遍历所有可能的动作
 	for (int j = 0; j < N; j++) {
 		int flag;
+		cerr << "isSpace of column j: " <<  isSpace(j, board, top, noX, noY) << endl;
 		if (flag = isSpace(j, board, top, noX, noY)) {
 			this_y = j;
 			this_x = top[j] - flag;
