@@ -6,6 +6,8 @@
 
 using namespace std;
 
+bool debug = false;
+
 /*
 	策略函数接口,该函数被对抗平台调用,每次传入当前状态,要求输出你的落子点,该落子点必须是一个符合游戏规则的落子点,不然对抗平台会直接认为你的程序有误
 	
@@ -91,14 +93,16 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 		// 更新最大评估值
 		maxEval = max(maxEval, eval);
-		cerr << "maxEval = " << maxEval << endl;
+		if (debug)
+			cerr << "maxEval = " << maxEval << endl;
 		if (maxEval == eval) {
 			x = this_x;
 			y = this_y;
 		}
 	}
 
-	cerr << "x=" << x << " y=" << y << endl;
+	if (debug)
+		cerr << "x=" << x << " y=" << y << endl;
 
 	// 落子点一定为 x = _top[y] - 1
 	// 当_top[y]为0时，不可以落子
@@ -176,31 +180,37 @@ int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
 }
 
 void printBoardAndValue(int* const * board, int M, int N, int value_of_2, int value){
-	cerr << "evaluating board value!..." << endl;
-	cerr << "board: " << endl;
-	for(int i=0; i<M; i++) {
-		for(int j=0; j<N; j++) //每行有m列
-			cerr<<board[i][j]<<" "; //输出第i行第j列的数
-		cerr<<endl; //每输出完一行，就输出一个换行符
+	if (debug){
+		cerr << "evaluating board value!..." << endl;
+		cerr << "board: " << endl;
+		for(int i=0; i<M; i++) {
+			for(int j=0; j<N; j++) //每行有m列
+				cerr<<board[i][j]<<" "; //输出第i行第j列的数
+			cerr<<endl; //每输出完一行，就输出一个换行符
+		}
+		cerr << "value of player 2 only: " << value_of_2 << endl;
+		cerr << "comprehensive value: " << value << endl;
 	}
-	cerr << "value of player 2 only: " << value_of_2 << endl;
-	cerr << "comprehensive value: " << value << endl;
 }
 
 void printBoard(int* const * board, int M, int N){
-	cerr << "board: " << endl;
-	for(int i=0; i<M; i++) {
-		for(int j=0; j<N; j++) //每行有m列
-			cerr<<board[i][j]<<" "; //输出第i行第j列的数
-		cerr<<endl; //每输出完一行，就输出一个换行符
+	if (debug){
+		cerr << "board: " << endl;
+		for(int i=0; i<M; i++) {
+			for(int j=0; j<N; j++) //每行有m列
+				cerr<<board[i][j]<<" "; //输出第i行第j列的数
+			cerr<<endl; //每输出完一行，就输出一个换行符
+		}
 	}
 }
 
 void printArray(int* arr, int N){
-	cerr << "top: " << endl;
-	for (int j = 0; j < N; j++)
-		cerr << arr[j] << " ";
-	cerr << endl;
+	if (debug){
+		cerr << "top: " << endl;
+		for (int j = 0; j < N; j++)
+			cerr << arr[j] << " ";
+		cerr << endl;
+	}
 }
 
 // 棋盘估值
@@ -340,7 +350,8 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
-		cerr << "machine (2) deciding (maximizing) ..." << endl;
+		if (debug)
+			cerr << "machine (2) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			// printBoard(board, M, N);
 			// printArray(top, N);
@@ -396,7 +407,8 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			return evaluateBoard(board, M, N, 2, 1);
 		}
 		// 遍历所有可能的动作
-		cerr << "player (1) deciding (maximizing) ..." << endl;
+		if (debug)
+			cerr << "player (1) deciding (maximizing) ..." << endl;
 		for (int j = 0; j < N; j++) {
 			int flag;
 			// printBoard(board, M, N);
@@ -426,11 +438,13 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 更新最小评估值
 			minEval = min(minEval, eval);
-			cerr << "minEval = " << minEval << endl;
+			if (debug)
+				cerr << "minEval = " << minEval << endl;
 
 			// 执行剪枝
 			if (beta <= alpha) {
-				cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+				if (debug)
+					cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
 				break;
 			}
 
