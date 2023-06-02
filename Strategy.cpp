@@ -9,7 +9,7 @@ using namespace std;
 bool debug = false;
 int connect_3_score = 10000;
 // int connect_3_score_vertical = 3000;
-int connect_2_score = 1000;
+int connect_2_score = 100;
 int connect_3_score_increment = connect_3_score;
 int piece_score = 1;
 
