@@ -309,6 +309,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	// machine decide
 	// 2
 	if (maximizing) {
+		cerr << "machine (2) deciding (maximizing) ..." << endl;
 		int maxEval = INT_MIN;
 		if (userWin(last_x, last_y, M, N, board)) {
 			printBoardAndValue(board, M, N, -1, INT_MIN);
@@ -360,6 +361,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 	// 如果是最小化的回合
 	// 即玩家的回合
 	else {
+		cerr << "player (1) deciding (maximizing) ..." << endl;
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
 			printBoardAndValue(board, M, N, -1, INT_MAX);
@@ -390,6 +392,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 递归调用Alpha-Beta算法，搜索下一层的节点
 			int eval = alphaBeta(board, depth - 1, alpha, beta, true, M, N, this_x, this_y, top, noX, noY);
+
 			// 恢复落子和top
 			board[this_x][this_y] = 0;
 			top[j] += flag;
