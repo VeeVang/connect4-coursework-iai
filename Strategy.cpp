@@ -47,7 +47,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 	//Add your own code below
 
 	/*--------------------参量--------------------------*/
-	int depth = 2;
+	int depth = 16;
 	
 	int* modifiable_top = new int[N];
 	for (int j = 0; j < N; j++) {
@@ -368,7 +368,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 
 			// 更新最大评估值
 			maxEval = max(maxEval, eval);
-			
+
 			// 执行剪枝
 			if (beta <= alpha) {
 				break;
