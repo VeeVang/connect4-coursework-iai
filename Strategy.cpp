@@ -79,6 +79,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
+		err << j << "th column eval = " << eval << endl;
 		
 		// 恢复落子和top
 		board[this_x][this_y] = 0;
@@ -95,7 +96,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		}
 	}
 
-	cerr << "x=" << x << "y=" << y;
+	cerr << "x=" << x << " y=" << y << endl;
 
 	// 落子点一定为 x = _top[y] - 1
 	// 当_top[y]为0时，不可以落子
