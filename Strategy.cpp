@@ -16,6 +16,7 @@ int piece_score = 4;
 int max_depth = 4;
 int add_thres = 3;
 int round = -1;
+int win_lose_confidence_coef = 1;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
 
@@ -437,7 +438,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// printBoard(board, M, N);
 			// cerr << "user (opoonent) will win!" << endl;
 
-			return INT_MIN + max_depth - depth;
+			return INT_MIN + win_lose_confidence_coef * (max_depth - depth);
 		}
 		else if (isTie(N, top)) {
 			// printBoardAndValue(board, M, N, -1, 0);
@@ -480,9 +481,9 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			maxEval = max(maxEval, eval);
 
 			// 执行剪枝
-			// if (beta <= alpha) {
-			// 	break;
-			// }
+			if (beta <= alpha) {
+				break;
+			}
 
 
 		}
@@ -495,7 +496,7 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 		int minEval = INT_MAX;
 		if (machineWin(last_x, last_y, M, N, board)) {
 			// printBoardAndValue(board, M, N, -1, INT_MAX);
-			return INT_MAX - max_depth + depth;
+			return INT_MAX - win_lose_confidence_coef * (max_depth - depth);
 		}
 		else if (isTie(N, top)) {
 			// printBoardAndValue(board, M, N, -1, 0);
@@ -541,11 +542,11 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// 	cerr << "minEval = " << minEval << endl;
 
 			// 执行剪枝
-			// if (beta <= alpha) {
-			// 	// if (debug)
-			// 	// 	cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
-			// 	break;
-			// }
+			if (beta <= alpha) {
+				// if (debug)
+				// 	cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
+				break;
+			}
 
 
 		}
