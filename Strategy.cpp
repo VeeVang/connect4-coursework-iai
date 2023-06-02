@@ -27,8 +27,7 @@ using namespace std;
 	output:
 		你的落子点Point
 */
-extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const int* top, const int* _board, 
-	const int lastX, const int lastY, const int noX, const int noY){
+extern "C" __declspec(dllexport) Point* getPoint(const int M, const int N, const int* top, const int* _board,  const int lastX, const int lastY, const int noX, const int noY){
 	/*
 		不要更改这段代码
 	*/
@@ -155,7 +154,11 @@ bool Empty(int* const* board, int M, int N, int i, int j, int self) {
 	}
 	// in and empty
 	else if (board[i][j] == 0) {
-return true;
+		return true;
+	}
+	// in and not empty
+	else{
+		return false;
 	}
 }
 
@@ -262,7 +265,8 @@ int isSpace(int j, int* const* board, const int* top, int noX, int noY) {
 	}
 	// 当top表明没占满
 	// 且当上一格子为noX, noY时
-	else if (top[j] - 1 == noX && j == noY) {
+	// else if (top[j] - 1 == noX && j == noY) {
+	else{
 		if (top[j] > 1) {
 			return 2;
 		}
