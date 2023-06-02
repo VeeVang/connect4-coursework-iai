@@ -262,7 +262,7 @@ int evaluateBoardFromSelf(int* const* board, int M, int N, int self, int opponen
 
 int isSpace(int j, int* const* board, const int* top, int noX, int noY) {
 	// 当top表明占满了时
-	if (top[j] != 0) {
+	if (top[j] == 0) {
 		return 0;
 	}
 	// 当top表明没占满
