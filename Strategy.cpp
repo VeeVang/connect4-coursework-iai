@@ -177,16 +177,15 @@ int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
 }
 
 void printBoardAndValue(int* const * board, int M, int N, int value_of_2, int value){
-		cerr << "evaluating board value!..." << endl;
-		cerr << "board: " << endl;
-		for(int i=0; i<M; i++) {
-			for(int j=0; j<N; j++) //每行有m列
-				cerr<<board[i][j]<<" "; //输出第i行第j列的数
-			cerr<<endl; //每输出完一行，就输出一个换行符
-		}
-		cerr << "value of player 2 only: " << value_of_2 << endl;
-		cerr << "comprehensive value: " << value << endl;
+	cerr << "evaluating board value!..." << endl;
+	cerr << "board: " << endl;
+	for(int i=0; i<M; i++) {
+		for(int j=0; j<N; j++) //每行有m列
+			cerr<<board[i][j]<<" "; //输出第i行第j列的数
+		cerr<<endl; //每输出完一行，就输出一个换行符
 	}
+	cerr << "value of player 2 only: " << value_of_2 << endl;
+	cerr << "comprehensive value: " << value << endl;
 }
 
 // 棋盘估值
