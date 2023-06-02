@@ -366,13 +366,15 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// 更新alpha值
 			alpha = max(alpha, eval);
 
+			// 更新最大评估值
+			maxEval = max(maxEval, eval);
+			
 			// 执行剪枝
 			if (beta <= alpha) {
 				break;
 			}
 
-			// 更新最大评估值
-			maxEval = max(maxEval, eval);
+
 		}
 
 		return maxEval;
@@ -422,15 +424,17 @@ int alphaBeta(int** board, int depth, int alpha, int beta, bool maximizing,
 			// 更新beta值
 			beta = min(beta, eval);
 
+			// 更新最小评估值
+			minEval = min(minEval, eval);
+			cerr << "minEval = " << minEval << endl;
+
 			// 执行剪枝
 			if (beta <= alpha) {
 				cerr << "beta = " <<beta << " alpha = " << alpha <<" Prune!" << endl;
 				break;
 			}
 
-			// 更新最小评估值
-			minEval = min(minEval, eval);
-			cerr << "minEval = " << minEval << endl;
+
 		}
 
 		return minEval;
