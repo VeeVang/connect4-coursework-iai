@@ -171,8 +171,6 @@ bool Empty(int* const* board, int M, int N, int i, int j, int self) {
 
 // 棋盘价值=己方目前的价值-对方目前棋局的价值。
 int evaluateBoard(int* const * board, int M, int N, int self, int opponent) {
-	if (evaluateBoardFromSelf(board, M, N, self, opponent) > evaluateBoardFromSelf(board, M, N, opponent, self)){
-
 	return evaluateBoardFromSelf(board, M, N, self, opponent) - evaluateBoardFromSelf(board, M, N, opponent, self);
 }
 
