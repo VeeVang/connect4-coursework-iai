@@ -15,6 +15,7 @@ int connect_2_score = 100;
 int piece_score = 4;
 int max_depth = 4;
 int add_thres = 3;
+int round = 0;
 
 // 进一步，可以考虑周围的位置是不是可以立刻下下去的，例如对于纵向的情况，就可以给他增加一个倍率。
 
@@ -93,7 +94,8 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 		// 递归调用Alpha-Beta算法，搜索下一层的节点
 		int eval = alphaBeta(board, max_depth - 1, alpha, INT_MAX, false, M, N, this_x, this_y, modifiable_top, noX, noY);
 		// if (debug)
-			cerr << j << "th column eval = " << eval << endl;
+		cerr << "round: " << round++ << endl;
+		cerr << j << "th column eval = " << eval << endl;
 		
 		// 恢复落子和top
 		board[this_x][this_y] = 0;
